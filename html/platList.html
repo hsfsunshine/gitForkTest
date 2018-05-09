@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/comm.css">
+    <script type="text/javascript" src="../js/rem.js"></script>
+    <title>适合门店</title>
+</head>
+<body class="bodyBg">
+    <img src="../assets/images/bg.png" class="bgTop">
+    <div class="mention">感谢相遇，30元现金已到账~</div>
+    <div class="moneyNum">30元会员专享红包</div>
+    <div class="NumXXX">“**********”</div>
+    <div class="isBtn" id="isBtn">已使用/失效</div>
+    <div class="user">使用条件：满30可用；</div>
+    <div class="times">可用时间：2018.05.19-2018.06.03</div>
+    <div class="line"></div>
+    <div class="fit">适合门店</div>
+    <div class="inAll">共18家门店</div>
+    <div class="main">
+        <div class="shop">
+            <div class="shopTop">
+                <div class="title">深圳福田山姆店</div>
+                <div class="tel">电话：0755-82700201</div>
+            </div>
+            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
+        </div>
+        <div class="shop">
+            <div class="shopTop">
+                <div class="title">深圳福田山姆店</div>
+                <div class="tel">电话：0755-82700201</div>
+            </div>
+            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
+        </div>
+        <div class="shop">
+            <div class="shopTop">
+                <div class="title">深圳福田山姆店</div>
+                <div class="tel">电话：0755-82700201</div>
+            </div>
+            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
+        </div>
+    </div>
+    <div class="entryOutput">
+        <div class="entry">
+            <input type="text" placeholder="请输入核销码" class="hxmInput" id="hxmInput">
+            <div class="sureHx" id="sureHx">确认核销</div>
+            <img class="hxmClose" src="../assets/images/hxmClose.png" id="hxmClose">
+        </div>
+    </div>
+</body>
+    <script src="../js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="../js/comm.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            var Page={
+                init: function(){
+                   this.bindEvent();
+                },
+                bindEvent: function(){
+                    $("#isBtn").on("click",function(){
+                        $(".entryOutput").show();
+                    });
+                    $("#hxmClose").on("click",function(){
+                        $(".entryOutput").hide();
+                    });
+                    $("#sureHx").on("click",function(){
+                        var hxmInput = $.trim($("#hxmInput").val());
+                        if(hxmInput == ""){
+                            CommFunc.toast("请输入核销码");
+                            return;
+                        }
+                        CommFunc.fAjax(
+                            {
+                                url : "/customer-bind/hxm",
+                                type : 'post',
+                                data : {
+                                    "hxmInput" : hxmInput
+                                },
+                                success : function(data) {
+                                    if(data.msg == "success"){
+                                        $(".entryOutput").hide();
+                                    }else{
+                                        CommFunc.toast(data.msg);
+                                    }
+                                }
+                            }
+                        );
+                    });
+                }
+            }
+            Page.init();
+        });
+    </script>
+</html>

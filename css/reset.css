@@ -13,17 +13,13 @@ textarea { outline: none; border: none; background: none; border-radius: 0;
   font-family:"Helvetica", "Arial";
 }
 textarea { resize: none; }
-html { -webkit-text-size-adjust:none;overflow:hidden;}
+html { -webkit-text-size-adjust:none;}
 article， aside， details， figcaption， figure， footer， header， hgroup， menu， nav， section { display: block; }
 img { display: block; max-width: 100%; height:auto; width: auto\9; /* ie8 */ vertical-align:top; }
 .video embed， .video object， .video iframe { width: 100%; height: auto; }
 a { border:0; text-decoration: none; outline: none;}
 a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
 em{ font-style: normal;}
-.clearfix:after,
-.clearfix:before { content: ""; display: table; }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; }
 body {onselectstart="return false";oncopy="return false";min-width:300px; font-family:"Helvetica", "Arial"; background-color: #f8f8f8; color:#030000;overflow-x:hidden;}
 body{font-family:"Helvetica", "PingPang SC", "DroidSansFallback","droidsans", "Segoe UI", "Lucida Grande", Helvetica, Arial,
 "Microsoft YaHei", FreeSans, Arimo, "Droid Sans",

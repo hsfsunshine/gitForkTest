@@ -71,7 +71,7 @@
                     
                     // 领取优惠券
                     $("#sureBtn").on("click",function(){
-                        var phone=_this.checkForm();
+                        var phone=_this.checkPhone();
                         if(!phone) return;
                         CommFunc.fAjax(
                             {
@@ -90,7 +90,7 @@
                     });
                     // 根据手机号查询是否领取过券
                     $("#btnText").on("click",function(){
-                        var phone=_this.checkForm();
+                        var phone=_this.checkPhone();
                         if(!phone) return;
                         CommFunc.fAjax(
                             {

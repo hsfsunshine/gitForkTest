@@ -11,12 +11,12 @@
 <body>
     <div class="bodyBg">
         <img src="../assets/images/bg.png" class="bgTop">
-        <div class="mention">感谢相遇，<span class="ticket_amount">50</span>元现金已到账~</div>
-        <div id="moneyNum" class="moneyNum"><span class="ticket_amount">50</span>元会员专享红包</div>
-        <div id="NumXXX" class="NumXXX">“<span class="xxxxxx">**********</span>”</div>
+        <div class="mention">感谢相遇，<span class="ticket_amount"></span>元现金已到账~</div>
+        <div id="moneyNum" class="moneyNum"><span class="ticket_amount"></span>元会员专享红包</div>
+        <div id="NumXXX" class="NumXXX">“<span class="xxxxxx"></span>”</div>
         <div id="isBtn" class="isBtn">已使用/失效</div>
-        <div id="user" class="user">使用条件：<span class="descr">满50可用；</span></div>
-        <div id="times" class="times">可用时间：<span class="startTime">2018.05.19</span>-<span class="endTime">2018.06.19</span></div>
+        <div id="user" class="user">使用条件：<span class="descr"></span></div>
+        <div id="times" class="times">可用时间：<span class="startTime"></span>-<span class="endTime"></span></div>
         <div id="line" class="line"></div>
         <div id="fit" class="fit">适合门店</div>
         <div id="inAll" class="inAll">共18家门店</div>
@@ -79,6 +79,7 @@
                                     "phone" : CommFunc.fGetQuery("phone")
                                 },
                                 success : function(data) {
+                                    console.log(data);
                                     if(!data.data){
                                         $(".entryOutput").hide();
                                         $(".isBtn").text("已使用/失效").unbind();

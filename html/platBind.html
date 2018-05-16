@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/comm.css">
     <script type="text/javascript" src="../js/rem.js"></script>
-    <title>2222</title>
+    <title>领取优惠券</title>
 </head>
 <body class="bgBodys">
     <img src="../assets/images/ma.png" style="position:absolute;top: .35rem;left: .33rem;width: .91rem;height: .89rem;">
@@ -46,57 +46,84 @@
                     this.bindEvent();
                 },
                 bindEvent: function(){
-
                     var _this = this;
+                    var ticketCode = 1;
                     $("#Hy").on("click",function(){
                         $(this).addClass("fffColor").siblings().removeClass("fffColor");
                         $("#Old").show();
                         $("#new").hide();
                         $("#titleText").text("老朋友");
+                        ticketCode = 1;
                     });
                     $("#NoHy").on("click",function(){
                         $(this).addClass("fffColor").siblings().removeClass("fffColor");
                         $("#new").show();
                         $("#Old").hide();
                         $("#titleText").text("新朋友");
+                        ticketCode = 2;
                     });
-                    // 立即领取按钮
+                    // 领取优惠券
                     $("#sureBtn").on("click",function(){
-                        _this.receive();
-                    });
-                    // 点击这里按钮
-                    $("#btnText").on("click",function(){
-                        _this.receive();
-                    });
-                },
-                receive: function(){
-                    var reg = /^1[3|4|5|7|8|9]\d{9}$/;
-                    var telphone = $.trim($("#telphone").val());
-                    if(telphone == ""){
-                        CommFunc.toast("手机号码不能为空");
-                        return;
-                    }
-                    if(!reg.test(telphone)){
-                        CommFunc.toast("请输入正确的手机号码");
-                        return;
-                    }
-                    CommFunc.fAjax(
-                        {
-                            url : "/customer-bind/receive",
-                            type : 'post',
-                            data : {
-                                "telphone" : telphone
-                            },
-                            success : function(data) {
-                                if(data.msg == "success"){
-                                    localStorage.setItem("user",JSON.stringify(data.msg));
-                                    window.location.href="./platList.html?telphone="+telphone;
-                                }else{
-                                    CommFunc.toast(data.msg);
+                        var reg = /^1[3|4|5|7|8|9]\d{9}$/;
+                        var telphone = $.trim($("#telphone").val());
+                        if(telphone == ""){
+                            CommFunc.toast("手机号码不能为空");
+                            return;
+                        }
+                        if(!reg.test(telphone)){
+                            CommFunc.toast("请输入正确的手机号码");
+                            return;
+                        }
+                        CommFunc.fAjax(
+                            {
+                                url : "/alicrad/rewardGifts",
+                                type : 'get',
+                                data : {
+                                    "phone" : telphone,
+                                    "ticketCode" : ticketCode,
+                                    "region": ""
+                                },
+                                success : function(data) {
+                                    if(data.failed == true){
+                                        sessionStorage.setItem("rewardGifts",JSON.stringify(data.data));
+                                        window.location.href="./platList.html";
+                                    }else{
+                                        CommFunc.toast(data.message);
+                                    }
                                 }
                             }
+                        );
+                    });
+                    // 根据手机号查询是否领取过券
+                    $("#btnText").on("click",function(){
+                        var reg = /^1[3|4|5|7|8|9]\d{9}$/;
+                        var telphone = $.trim($("#telphone").val());
+                        if(telphone == ""){
+                            CommFunc.toast("手机号码不能为空");
+                            return;
                         }
-                    );
+                        if(!reg.test(telphone)){
+                            CommFunc.toast("请输入正确的手机号码");
+                            return;
+                        }
+                        CommFunc.fAjax(
+                            {
+                                url : "/alicrad/getGifts",
+                                type : 'get',   
+                                data : {
+                                    "phone" : telphone
+                                },
+                                success : function(data) {
+                                    if(data){
+                                        sessionStorage.setItem("getGifts",JSON.stringify(data.data));
+                                        window.location.href="./platList.html";
+                                    }else{
+                                        CommFunc.toast(data.msg);
+                                    }
+                                }
+                            }
+                        );
+                    });
                 }
             }
             Page.init();

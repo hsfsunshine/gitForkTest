@@ -46,10 +46,16 @@ var MockRoute = function (request, response) {
         case "/customer-bind/logout":
             util.fRestApi(response,'{"msg":"退出登录成功"}');
             break;
-        case "/customer-bind/hxm":
+        // 用户核销接口
+        case "/alicrad/saveCancelCode":
             util.fRestApi(response,'{"msg":"success"}');
             break;
-        case "/customer-bind/receive":
+        // 八马领取优惠券
+        case "/alicrad/rewardGifts":
+            util.fRestApi(response,'{"msg":"success"}');
+            break;
+        // 根据手机号查询是否领取过券
+        case "/alicrad/getGifts":
             util.fRestApi(response,'{"msg":"success"}');
             break;
         default:

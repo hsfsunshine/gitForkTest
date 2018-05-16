@@ -98,7 +98,6 @@
     font-weight: 700;
 }
 .inAll{
-    width: 100%;
     padding-left: .31rem;
     height: .35rem;
     line-height: .35rem;
@@ -246,7 +245,7 @@
     position: relative;
     min-height:100vh;
     background:url(../assets/images/bgbgbg.jpg) no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
 }
 .inputAlert{
     width: 4.1rem;

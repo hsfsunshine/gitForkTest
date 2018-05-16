@@ -11,15 +11,15 @@
 <body>
     <div class="bodyBg">
         <img src="../assets/images/bg.png" class="bgTop">
-        <div class="mention">感谢相遇，30元现金已到账~</div>
-        <div class="moneyNum">30元会员专享红包</div>
-        <div class="NumXXX">“**********”</div>
-        <div class="isBtn" id="isBtn">已使用/失效</div>
-        <div class="user">使用条件：满30可用；</div>
-        <div class="times">可用时间：2018.05.19-2018.06.03</div>
-        <div class="line"></div>
-        <div class="fit">适合门店</div>
-        <div class="inAll">共18家门店</div>
+        <div id="mention" class="mention">感谢相遇，30元现金已到账~</div>
+        <div id="moneyNum" class="moneyNum">30元会员专享红包</div>
+        <div id="NumXXX" class="NumXXX">“**********”</div>
+        <div id="isBtn" class="isBtn">已使用/失效</div>
+        <div id="user" class="user">使用条件：满30可用；</div>
+        <div id="times" class="times">可用时间：2018.05.19-2018.06.03</div>
+        <div id="line" class="line"></div>
+        <div id="fit" class="fit">适合门店</div>
+        <div id="inAll" class="inAll">共18家门店</div>
     </div>
     <div class="fitMain">
         <img src="../assets/images/fit.jpg" alt="">
@@ -62,7 +62,10 @@
             var Page={
                 init: function(){
                    this.bindEvent();
-                   var user = JSON.parse(localStorage.getItem("user"));
+                   var rewardGifts = JSON.parse(sessionStorage.getItem("rewardGifts"));
+                   var getGifts = JSON.parse(sessionStorage.getItem("getGifts"));
+                   console.log(rewardGifts);
+                   console.log(getGifts);
                 },
                 bindEvent: function(){
                     $("#isBtn").on("click",function(){
@@ -79,13 +82,15 @@
                         }
                         CommFunc.fAjax(
                             {
-                                url : "/customer-bind/hxm",
-                                type : 'post',
+                                url : "/alicrad/saveCancelCode",
+                                type : 'get',
                                 data : {
-                                    "hxmInput" : hxmInput
+                                    "cancelCode" : hxmInput,
+                                    "ticketCode" : 1,
+                                    "phone" : 123
                                 },
                                 success : function(data) {
-                                    if(data.msg == "success"){
+                                    if(data){
                                         $(".entryOutput").hide();
                                     }else{
                                         CommFunc.toast(data.msg);

@@ -11,12 +11,12 @@
 <body>
     <div class="bodyBg">
         <img src="../assets/images/bg.png" class="bgTop">
-        <div class="mention">感谢相遇，<span id="mention">30</span>元现金已到账~</div>
-        <div id="moneyNum" class="moneyNum">30元会员专享红包</div>
-        <div id="NumXXX" class="NumXXX">“**********”</div>
+        <div class="mention">感谢相遇，<span class="ticket_amount">50</span>元现金已到账~</div>
+        <div id="moneyNum" class="moneyNum"><span class="ticket_amount">50</span>元会员专享红包</div>
+        <div id="NumXXX" class="NumXXX">“<span class="xxxxxx">**********</span>”</div>
         <div id="isBtn" class="isBtn">已使用/失效</div>
-        <div id="user" class="user">使用条件：满30可用；</div>
-        <div id="times" class="times">可用时间：2018.05.19-2018.06.03</div>
+        <div id="user" class="user">使用条件：<span class="descr">满50可用；</span></div>
+        <div id="times" class="times">可用时间：<span class="startTime">2018.05.19</span>-<span class="endTime">2018.06.19</span></div>
         <div id="line" class="line"></div>
         <div id="fit" class="fit">适合门店</div>
         <div id="inAll" class="inAll">共18家门店</div>
@@ -61,19 +61,52 @@
         $(function(){
             var Page={
                 init: function(){
-                   this.bindEvent();
-                   var rewardGifts = JSON.parse(sessionStorage.getItem("rewardGifts"));
-                   var getGifts = JSON.parse(sessionStorage.getItem("getGifts"));
-                //    $("#mention").text(rewardGifts)
-
-
-                   console.log(rewardGifts);
-                   console.log(getGifts);
+                    this.bindEvent();
                 },
                 bindEvent: function(){
-                    $("#isBtn").on("click",function(){
-                        $(".entryOutput").show();
-                    });
+                    var rewardGifts = JSON.parse(sessionStorage.getItem("rewardGifts"));
+                    var getGifts = JSON.parse(sessionStorage.getItem("getGifts"));
+                    if(rewardGifts){
+                        var startTime = new Date(rewardGifts.start_time);
+                        var start_time = startTime.getFullYear() + '.' + (startTime.getMonth() + 1) + '.' + startTime.getDate();
+                        var endTime = new Date(rewardGifts.end_time);
+                        var end_time = endTime.getFullYear() + '.' + (endTime.getMonth() + 1) + '.' + endTime.getDate();
+                        var tick_code = rewardGifts.tick_code;
+                        $(".ticket_amount").text(rewardGifts.ticket_amount);
+                        $(".descr").text(rewardGifts.descr);
+                        $(".startTime").text(start_time);
+                        $(".endTime").text(end_time);
+                        $(".xxxxxx").text(tick_code);
+                        if(rewardGifts.meiyoule){
+                            $(".isBtn").text("现在核销").on("click",function(){  
+                                $(".entryOutput").show();
+                            });
+                        }else{
+                            $(".isBtn").text("已使用/失效");
+                        }
+                    }
+                    if(getGifts){
+                        var startTime = new Date(getGifts.start_time);
+                        var start_time = startTime.getFullYear() + '.' + (startTime.getMonth() + 1) + '.' + startTime.getDate();
+                        var endTime = new Date(getGifts.end_time);
+                        var end_time = endTime.getFullYear() + '.' + (endTime.getMonth() + 1) + '.' + endTime.getDate();
+                        var tick_code = getGifts.tick_code;
+                        $(".ticket_amount").text(getGifts.ticket_amount);
+                        $(".descr").text(getGifts.descr);
+                        $(".startTime").text(start_time);
+                        $(".endTime").text(end_time);
+                        $(".xxxxxx").text(tick_code);
+                        if(getGifts.meiyoule){
+                            $(".isBtn").text("现在核销").on("click",function(){  
+                                $(".entryOutput").show();
+                            });
+                        }else{
+                            $(".isBtn").text("已使用/失效");
+                        }
+                    }
+                    console.log(rewardGifts);
+                    console.log(getGifts);
+                    
                     $("#hxmClose").on("click",function(){
                         $(".entryOutput").hide();
                     });
@@ -89,12 +122,13 @@
                                 type : 'get',
                                 data : {
                                     "cancelCode" : hxmInput,
-                                    "ticketCode" : 1,
-                                    "phone" : 123
+                                    "ticketCode" : tick_code,
+                                    "phone" : CommFunc.fGetQuery("phone")
                                 },
                                 success : function(data) {
-                                    if(data){
+                                    if(data.failed){
                                         $(".entryOutput").hide();
+                                        $(".isBtn").text("已使用/失效").unbind();
                                     }else{
                                         CommFunc.toast(data.msg);
                                     }

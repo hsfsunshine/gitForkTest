@@ -81,7 +81,7 @@
                                 success : function(data) {
                                     if(data.failed == true){
                                         sessionStorage.setItem("rewardGifts",JSON.stringify(data.data));
-                                        window.location.href="./platList.html";
+                                        window.location.href="./useGift.html?phone=" + telphone;
                                     }else{
                                         CommFunc.toast(data.message);
                                     }
@@ -110,11 +110,11 @@
                                 },
                                 success : function(data) {
                                     if(data.failed == true){
-                                        if(data.data == null){
-                                            CommFunc.toast(data.message);
-                                        }else{
+                                        if(data.data){
                                             sessionStorage.setItem("getGifts",JSON.stringify(data.data));
-                                            window.location.href="./platList.html";
+                                            window.location.href="./useGift.html?phone=" + telphone;
+                                        }else{
+                                            CommFunc.toast(data.message);
                                         }
                                     }
                                 }

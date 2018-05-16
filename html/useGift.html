@@ -48,7 +48,7 @@
                         $(".descr").text(rewardGifts.descr);
                         $(".startTime").text(CommFunc.formatDate(rewardGifts.start_time));
                         $(".endTime").text(CommFunc.formatDate(rewardGifts.end_time));
-                        $(".xxxxxx").text(rewardGifts.tick_code);
+                        $(".xxxxxx").text(rewardGifts.check_code);
                         if(rewardGifts.status == 1){
                             $(".isBtn").text("现在核销").on("click",function(){  
                                 $(".entryOutput").show();
@@ -81,6 +81,7 @@
                                 success : function(data) {
                                     console.log(data);
                                     if(!data.data){
+                                        CommFunc.toast(data.message);
                                         $(".entryOutput").hide();
                                         $(".isBtn").text("已使用/失效").unbind();
                                     }else{

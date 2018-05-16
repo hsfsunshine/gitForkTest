@@ -16,7 +16,7 @@ var MockRoute = function (request, response) {
             break;
         // 根据手机号查询是否领取过券
         case "/alicrad/getGifts":
-            util.fRestApi(response,'{"failed": true, message: "查询成功", data:{id: null, tick_name: "新人30元优惠券", tick_code: "0", ticket_amount: "30", check_code: null,tick_name:"新人30元优惠券",ticket_amount:"30"}}');
+            util.fRestApi(response,'{"failed": true, message: "查询成功", data:{id: null, tick_name: "新人50元优惠券", tick_code: "0", ticket_amount: "30", check_code: null,tick_name:"新人30元优惠券",ticket_amount:"30"}}');
             break;
         default:
             console.log('{"msg":"该方法尚未实现，请补充","path":"' + urlPath + '"}');

@@ -47,20 +47,17 @@
                 },
                 bindEvent: function(){
                     var _this = this;
-                    var ticketCode = 1;
                     $("#Hy").on("click",function(){
                         $(this).addClass("fffColor").siblings().removeClass("fffColor");
                         $("#Old").show();
                         $("#new").hide();
                         $("#titleText").text("老朋友");
-                        ticketCode = 1;
                     });
                     $("#NoHy").on("click",function(){
                         $(this).addClass("fffColor").siblings().removeClass("fffColor");
                         $("#new").show();
                         $("#Old").hide();
                         $("#titleText").text("新朋友");
-                        ticketCode = 2;
                     });
                     // 领取优惠券
                     $("#sureBtn").on("click",function(){
@@ -79,9 +76,7 @@
                                 url : "/alicrad/rewardGifts",
                                 type : 'get',
                                 data : {
-                                    "phone" : telphone,
-                                    "ticketCode" : ticketCode,
-                                    "region": ""
+                                    "phone" : telphone
                                 },
                                 success : function(data) {
                                     if(data.failed == true){
@@ -114,11 +109,13 @@
                                     "phone" : telphone
                                 },
                                 success : function(data) {
-                                    if(data){
-                                        sessionStorage.setItem("getGifts",JSON.stringify(data.data));
-                                        window.location.href="./platList.html";
-                                    }else{
-                                        CommFunc.toast(data.msg);
+                                    if(data.failed == true){
+                                        if(data.data == null){
+                                            CommFunc.toast(data.message);
+                                        }else{
+                                            sessionStorage.setItem("getGifts",JSON.stringify(data.data));
+                                            window.location.href="./platList.html";
+                                        }
                                     }
                                 }
                             }

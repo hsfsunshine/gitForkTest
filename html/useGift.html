@@ -11,7 +11,7 @@
 <body>
     <div class="bodyBg">
         <img src="../assets/images/bg.png" class="bgTop">
-        <div id="mention" class="mention">感谢相遇，30元现金已到账~</div>
+        <div class="mention">感谢相遇，<span id="mention">30</span>元现金已到账~</div>
         <div id="moneyNum" class="moneyNum">30元会员专享红包</div>
         <div id="NumXXX" class="NumXXX">“**********”</div>
         <div id="isBtn" class="isBtn">已使用/失效</div>
@@ -22,7 +22,7 @@
         <div id="inAll" class="inAll">共18家门店</div>
     </div>
     <div class="fitMain">
-        <img src="../assets/images/fit.jpg" alt="">
+        <img src="../assets/images/fit.png" alt="">
     </div>
 <!--     <div class="main">
         <div class="shop">
@@ -64,6 +64,9 @@
                    this.bindEvent();
                    var rewardGifts = JSON.parse(sessionStorage.getItem("rewardGifts"));
                    var getGifts = JSON.parse(sessionStorage.getItem("getGifts"));
+                //    $("#mention").text(rewardGifts)
+
+
                    console.log(rewardGifts);
                    console.log(getGifts);
                 },

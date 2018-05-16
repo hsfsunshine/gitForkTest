@@ -24,29 +24,6 @@
     <div class="fitMain">
         <img src="../assets/images/fit.png" alt="">
     </div>
-<!--     <div class="main">
-        <div class="shop">
-            <div class="shopTop">
-                <div class="title">深圳福田山姆店</div>
-                <div class="tel">电话：0755-82700201</div>
-            </div>
-            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
-        </div>
-        <div class="shop">
-            <div class="shopTop">
-                <div class="title">深圳福田山姆店</div>
-                <div class="tel">电话：0755-82700201</div>
-            </div>
-            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
-        </div>
-        <div class="shop">
-            <div class="shopTop">
-                <div class="title">深圳福田山姆店</div>
-                <div class="tel">电话：0755-82700201</div>
-            </div>
-            <div class="site">深圳市福田区侨香路与农林路交汇处山姆会员店2楼八马茶业店</div>
-        </div>
-    </div> -->
     <div class="entryOutput">
         <div class="entry">
             <input type="text" placeholder="请输入核销码" class="hxmInput" id="hxmInput">
@@ -61,22 +38,17 @@
         $(function(){
             var Page={
                 init: function(){
+                    this.getGiftInfo();
                     this.bindEvent();
                 },
-                bindEvent: function(){
-                    var rewardGifts = JSON.parse(sessionStorage.getItem("rewardGifts"));
-                    var getGifts = JSON.parse(sessionStorage.getItem("getGifts"));
+                getGiftInfo:function(){
+                    var rewardGifts =this.rewardGifts= JSON.parse(sessionStorage.getItem("rewardGifts"));
                     if(rewardGifts){
-                        var startTime = new Date(rewardGifts.start_time);
-                        var start_time = startTime.getFullYear() + '.' + (startTime.getMonth() + 1) + '.' + startTime.getDate();
-                        var endTime = new Date(rewardGifts.end_time);
-                        var end_time = endTime.getFullYear() + '.' + (endTime.getMonth() + 1) + '.' + endTime.getDate();
-                        var tick_code = rewardGifts.tick_code;
                         $(".ticket_amount").text(rewardGifts.ticket_amount);
                         $(".descr").text(rewardGifts.descr);
-                        $(".startTime").text(start_time);
-                        $(".endTime").text(end_time);
-                        $(".xxxxxx").text(tick_code);
+                        $(".startTime").text(CommFunc.formatDate(rewardGifts.start_time));
+                        $(".endTime").text(CommFunc.formatDate(rewardGifts.end_time));
+                        $(".xxxxxx").text(rewardGifts.tick_code);
                         if(rewardGifts.status == 1){
                             $(".isBtn").text("现在核销").on("click",function(){  
                                 $(".entryOutput").show();
@@ -85,34 +57,15 @@
                             $(".isBtn").text("已使用/失效");
                         }
                     }
-                    if(getGifts){
-                        var startTime = new Date(getGifts.start_time);
-                        var start_time = startTime.getFullYear() + '.' + (startTime.getMonth() + 1) + '.' + startTime.getDate();
-                        var endTime = new Date(getGifts.end_time);
-                        var end_time = endTime.getFullYear() + '.' + (endTime.getMonth() + 1) + '.' + endTime.getDate();
-                        var tick_code = getGifts.tick_code;
-                        $(".ticket_amount").text(getGifts.ticket_amount);
-                        $(".descr").text(getGifts.descr);
-                        $(".startTime").text(start_time);
-                        $(".endTime").text(end_time);
-                        $(".xxxxxx").text(tick_code);
-                        if(getGifts.status == 1){
-                            $(".isBtn").text("现在核销").on("click",function(){  
-                                $(".entryOutput").show();
-                            });
-                        }else{
-                            $(".isBtn").text("已使用/失效");
-                        }
-                    }
-                    console.log(rewardGifts);
-                    console.log(getGifts);
-                    
+                },
+                bindEvent: function(){
+                    var _this=this;                 
                     $("#hxmClose").on("click",function(){
                         $(".entryOutput").hide();
                     });
                     $("#sureHx").on("click",function(){
                         var hxmInput = $.trim($("#hxmInput").val());
-                        if(hxmInput == ""){
+                        if(!hxmInput){
                             CommFunc.toast("请输入核销码");
                             return;
                         }
@@ -122,15 +75,15 @@
                                 type : 'get',
                                 data : {
                                     "cancelCode" : hxmInput,
-                                    "ticketCode" : tick_code,
+                                    "ticketCode" : _this.rewardGifts.tick_code,
                                     "phone" : CommFunc.fGetQuery("phone")
                                 },
                                 success : function(data) {
-                                    if(data.failed){
+                                    if(data.data){
                                         $(".entryOutput").hide();
                                         $(".isBtn").text("已使用/失效").unbind();
                                     }else{
-                                        CommFunc.toast(data.msg);
+                                        CommFunc.toast(data.message);
                                     }
                                 }
                             }

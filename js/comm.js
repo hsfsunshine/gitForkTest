@@ -66,6 +66,15 @@ window.CommFunc = (function($){
 				toastBox.remove();
 				typeof callback == 'function' && callback();
             },2000);
+		},
+		//format时间
+		formatDate:function(time){
+			var timeStr='';
+			if(time){
+				var _time=new Date(time);
+				timeStr = _time.getFullYear() + '.' + (_time.getMonth() + 1) + '.' + _time.getDate();
+			}
+			return timeStr;
 		}
     };
     return comm;

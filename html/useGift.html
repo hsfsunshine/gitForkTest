@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/comm.css">
     <script type="text/javascript" src="../js/rem.js"></script>
-    <title>八马红包</title>
+    <title>领红包</title>
 </head>
 <body>
     <div class="bodyBg">
@@ -79,7 +79,7 @@
                                     "phone" : CommFunc.fGetQuery("phone")
                                 },
                                 success : function(data) {
-                                    if(data.data){
+                                    if(!data.data){
                                         $(".entryOutput").hide();
                                         $(".isBtn").text("已使用/失效").unbind();
                                     }else{
